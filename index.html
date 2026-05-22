@@ -1,0 +1,2597 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>امتحان فيزياء — موضوع الحركة | الصف السابع</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===== CSS VARIABLES ===== */
+:root {
+  --deep: #0a0f1e;
+  --navy: #0d1b3e;
+  --blue: #1a3a6e;
+  --accent: #2563eb;
+  --accent2: #06b6d4;
+  --gold: #f59e0b;
+  --gold-light: #fcd34d;
+  --surface: #111827;
+  --surface2: #1f2937;
+  --surface3: #374151;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(37,99,235,0.3);
+  --text: #f9fafb;
+  --text2: #9ca3af;
+  --text3: #6b7280;
+  --green: #10b981;
+  --red: #ef4444;
+  --orange: #f97316;
+  --purple: #8b5cf6;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 20px 60px rgba(0,0,0,0.5);
+  --shadow-sm: 0 4px 20px rgba(0,0,0,0.3);
+  --glow: 0 0 40px rgba(37,99,235,0.2);
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--deep);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  direction: rtl;
+}
+
+/* Animated background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 80% 50% at 20% 20%, rgba(37,99,235,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(6,182,212,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 50% 50%, rgba(139,92,246,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== SCREENS ===== */
+.screen {
+  display: none;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+.screen.active { display: flex; flex-direction: column; }
+
+/* ===== HEADER ===== */
+.exam-header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  border-bottom: 1px solid var(--border2);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4);
+}
+
+.exam-header img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  padding: 4px;
+}
+
+.header-info { flex: 1; }
+.header-info h1 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+.header-info p {
+  font-size: 12px;
+  color: var(--accent2);
+  margin-top: 2px;
+}
+
+.header-badge {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--deep);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* ===== WELCOME SCREEN ===== */
+#screen-welcome {
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.welcome-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 24px;
+  padding: 48px 40px;
+  max-width: 460px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow), var(--glow);
+  animation: fadeUp 0.6s ease;
+}
+
+.welcome-card img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  padding: 8px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+}
+
+.welcome-card h2 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--accent2), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+.welcome-card p {
+  color: var(--text2);
+  font-size: 15px;
+  margin-bottom: 32px;
+}
+
+.school-tag {
+  display: inline-block;
+  background: rgba(37,99,235,0.15);
+  border: 1px solid var(--border2);
+  color: var(--accent2);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-bottom: 32px;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn {
+  padding: 14px 24px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), #1d4ed8);
+  color: white;
+  box-shadow: 0 4px 20px rgba(37,99,235,0.4);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(37,99,235,0.5);
+}
+
+.btn-secondary {
+  background: var(--surface2);
+  color: var(--text2);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover {
+  background: var(--surface3);
+  color: var(--text);
+  border-color: var(--border2);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), #d97706);
+  color: var(--deep);
+  box-shadow: 0 4px 20px rgba(245,158,11,0.3);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(245,158,11,0.4);
+}
+
+/* ===== LOGIN SCREEN ===== */
+#screen-login {
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.login-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.5s ease;
+}
+
+.login-card h2 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.code-hint {
+  background: rgba(6,182,212,0.08);
+  border: 1px solid rgba(6,182,212,0.2);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.8;
+}
+.code-hint strong { color: var(--accent2); }
+.code-hint .example {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 14px;
+  color: var(--gold-light);
+  direction: ltr;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+.input-group label {
+  display: block;
+  color: var(--text2);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.input-group input, .input-group textarea {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  color: var(--text);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 4px;
+  transition: border-color 0.2s;
+  outline: none;
+  direction: ltr;
+}
+.input-group input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+.input-group textarea {
+  letter-spacing: normal;
+  text-align: right;
+  direction: rtl;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.error-msg {
+  color: var(--red);
+  font-size: 13px;
+  margin-top: 8px;
+  display: none;
+}
+
+/* ===== EXAM SCREEN ===== */
+#screen-exam {
+  flex-direction: column;
+}
+
+.exam-topbar {
+  background: var(--navy);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.student-badge {
+  background: rgba(37,99,235,0.15);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--accent2);
+  font-weight: 700;
+}
+
+.timer-display {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-family: 'Cairo', monospace;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: 2px;
+}
+.timer-display.warning { color: var(--red); animation: pulse 1s infinite; }
+
+.progress-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text2);
+}
+
+.progress-bar-wrap {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  padding: 0;
+  height: 4px;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width 0.4s ease;
+}
+
+.exam-body {
+  flex: 1;
+  padding: 24px 20px;
+  max-width: 820px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* SECTIONS */
+.section-header {
+  background: linear-gradient(135deg, var(--navy) 0%, rgba(26,58,110,0.5) 100%);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.section-header h2 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.section-law {
+  background: rgba(6,182,212,0.1);
+  border: 1px solid rgba(6,182,212,0.2);
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 14px;
+  color: var(--accent2);
+  font-family: monospace;
+  direction: ltr;
+  display: inline-block;
+  margin-top: 6px;
+}
+
+.section-marks {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--deep);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* QUESTION CARDS */
+.question-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.question-card.answered { border-color: rgba(16,185,129,0.3); }
+
+.question-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--surface2);
+}
+
+.question-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.q-tag {
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.q-tag.recall { background: rgba(139,92,246,0.2); color: #a78bfa; }
+.q-tag.understand { background: rgba(6,182,212,0.2); color: var(--accent2); }
+.q-tag.apply { background: rgba(245,158,11,0.2); color: var(--gold); }
+.q-tag.analyze { background: rgba(16,185,129,0.2); color: #34d399; }
+.q-tag.evaluate { background: rgba(239,68,68,0.2); color: #f87171; }
+
+.question-marks {
+  font-size: 13px;
+  color: var(--gold);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.question-body {
+  padding: 20px;
+}
+
+.sub-question {
+  margin-bottom: 20px;
+}
+.sub-question:last-child { margin-bottom: 0; }
+
+.sub-question .q-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.sub-question .q-text .highlight {
+  background: rgba(37,99,235,0.15);
+  border: 1px solid rgba(37,99,235,0.25);
+  border-radius: 6px;
+  padding: 1px 8px;
+  color: var(--accent2);
+  font-weight: 700;
+  direction: ltr;
+  display: inline-block;
+  margin: 0 2px;
+}
+
+/* MCQ OPTIONS */
+.mcq-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mcq-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.mcq-option:hover {
+  border-color: var(--accent);
+  background: rgba(37,99,235,0.08);
+}
+.mcq-option input[type="radio"] { display: none; }
+.mcq-option.selected {
+  border-color: var(--accent);
+  background: rgba(37,99,235,0.12);
+}
+.mcq-option .opt-letter {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--text2);
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.mcq-option.selected .opt-letter {
+  background: var(--accent);
+  color: white;
+}
+.mcq-option .opt-text {
+  font-size: 14px;
+  color: var(--text);
+  flex: 1;
+}
+
+/* TRUE/FALSE TABLE */
+.tf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.tf-table th {
+  background: var(--surface3);
+  color: var(--text2);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 10px 14px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+}
+.tf-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  color: var(--text);
+  line-height: 1.6;
+}
+.tf-table tr:last-child td { border-bottom: none; }
+.tf-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.tf-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+.tf-btn {
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 2px solid var(--border);
+  background: var(--surface2);
+  color: var(--text2);
+  cursor: pointer;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.tf-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+.tf-btn.active-true {
+  border-color: var(--green);
+  background: rgba(16,185,129,0.15);
+  color: var(--green);
+}
+.tf-btn.active-false {
+  border-color: var(--red);
+  background: rgba(239,68,68,0.15);
+  color: var(--red);
+}
+
+/* DATA TABLES (fill) */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.data-table th {
+  background: rgba(37,99,235,0.15);
+  color: var(--accent2);
+  padding: 10px 14px;
+  font-weight: 700;
+  border: 1px solid var(--border2);
+}
+.data-table td {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  text-align: center;
+  color: var(--text);
+}
+.data-table td.given {
+  background: var(--surface3);
+  font-weight: 700;
+  color: var(--gold-light);
+}
+.data-table td input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+  padding: 4px;
+}
+.data-table td:has(input):focus-within {
+  background: rgba(37,99,235,0.08);
+  border-color: var(--accent);
+}
+
+/* TEXT AREAS */
+.answer-textarea {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: var(--text);
+  font-family: 'Tajawal', sans-serif;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 70px;
+  outline: none;
+  transition: border-color 0.2s;
+  direction: rtl;
+}
+.answer-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+
+/* GRAPHS */
+.graph-container {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.graph-title {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+canvas.graph-canvas {
+  border-radius: 8px;
+  max-width: 100%;
+}
+
+/* EXPERIMENT TABLE */
+.experiment-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 16px 0;
+}
+.experiment-table th {
+  background: rgba(139,92,246,0.2);
+  color: #c4b5fd;
+  padding: 10px 14px;
+  border: 1px solid rgba(139,92,246,0.3);
+}
+.experiment-table td {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  text-align: center;
+  color: var(--text);
+  font-weight: 600;
+}
+.experiment-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+/* ANTI-CHEAT NOTICE */
+.personalized-notice {
+  background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(6,182,212,0.08));
+  border: 1px solid rgba(37,99,235,0.25);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--accent2);
+}
+.personalized-notice .lock-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* SUBMIT SECTION */
+.submit-section {
+  padding: 20px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  margin-top: 20px;
+  border-radius: var(--radius);
+}
+
+.answer-status {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.ans-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  background: var(--surface3);
+  color: var(--text3);
+  border: 1px solid var(--border);
+}
+.ans-dot.done {
+  background: rgba(16,185,129,0.15);
+  border-color: rgba(16,185,129,0.3);
+  color: var(--green);
+}
+
+/* ===== SUCCESS SCREEN ===== */
+#screen-success {
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.success-card {
+  background: var(--surface);
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 560px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow), 0 0 60px rgba(16,185,129,0.1);
+  animation: fadeUp 0.6s ease;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(16,185,129,0.15);
+  border: 2px solid rgba(16,185,129,0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin: 0 auto 24px;
+}
+
+.success-card h2 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+
+.score-display {
+  background: var(--surface2);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 24px 0;
+}
+
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.score-row:last-child { border-bottom: none; }
+.score-row .label { color: var(--text2); }
+.score-row .val { font-weight: 700; color: var(--text); }
+.score-row .val.auto { color: var(--green); }
+.score-row .val.pending { color: var(--gold); }
+
+.feedback-warning {
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--gold);
+  margin: 16px 0;
+  text-align: right;
+}
+
+/* ===== RATING SCREEN ===== */
+.rating-section {
+  margin-top: 24px;
+  text-align: right;
+}
+
+.rating-section h3 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.rating-question {
+  margin-bottom: 16px;
+}
+.rating-question p { font-size: 14px; color: var(--text2); margin-bottom: 8px; }
+
+.rating-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rating-opt {
+  padding: 8px 14px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Tajawal', sans-serif;
+}
+.rating-opt:hover, .rating-opt.selected {
+  background: rgba(37,99,235,0.12);
+  border-color: var(--accent);
+  color: var(--accent2);
+}
+
+/* ===== TEACHER DASHBOARD ===== */
+#screen-teacher {
+  flex-direction: column;
+}
+
+.dashboard-header {
+  background: linear-gradient(135deg, var(--navy), var(--blue));
+  border-bottom: 1px solid var(--border2);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dashboard-header h1 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.dashboard-body { padding: 24px; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+}
+.stat-card .stat-val {
+  font-family: 'Cairo', sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--accent2);
+}
+.stat-card .stat-label { font-size: 13px; color: var(--text3); margin-top: 4px; }
+
+.students-table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.students-table-wrap h3 {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Cairo', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+table.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.results-table th {
+  background: var(--surface2);
+  color: var(--text2);
+  padding: 12px 16px;
+  text-align: right;
+  font-weight: 700;
+  border-bottom: 1px solid var(--border);
+}
+.results-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.results-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.grade-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.grade-A { background: rgba(16,185,129,0.2); color: var(--green); }
+.grade-B { background: rgba(6,182,212,0.2); color: var(--accent2); }
+.grade-C { background: rgba(245,158,11,0.2); color: var(--gold); }
+.grade-D { background: rgba(239,68,68,0.2); color: var(--red); }
+
+.btn-detail {
+  padding: 5px 12px;
+  background: rgba(37,99,235,0.1);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  color: var(--accent2);
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'Tajawal', sans-serif;
+  transition: all 0.2s;
+}
+.btn-detail:hover { background: rgba(37,99,235,0.2); }
+
+.empty-state {
+  padding: 48px;
+  text-align: center;
+  color: var(--text3);
+  font-size: 15px;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 28px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow);
+  animation: fadeUp 0.3s ease;
+  direction: rtl;
+}
+.modal-box h3 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-close {
+  background: var(--surface2);
+  border: none;
+  color: var(--text2);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detail-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.detail-row .d-label { color: var(--text2); font-size: 12px; margin-bottom: 4px; }
+.detail-row .d-val { color: var(--text); }
+
+/* ===== BLOOM SUMMARY ===== */
+.bloom-bar {
+  display: flex;
+  gap: 3px;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 8px;
+  margin-top: 20px;
+}
+.bloom-seg { flex: 1; }
+
+/* TEACHER LOGIN */
+#screen-teacher-login {
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+/* ANTI-PASTE FEEDBACK */
+.paste-blocked-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: rgba(239,68,68,0.9);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 999;
+  animation: slideIn 0.3s ease;
+  display: none;
+}
+.paste-blocked-toast.show { display: block; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ===== DIVIDER ===== */
+.q-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
+}
+
+/* ===== DISABLED paste ===== */
+.no-paste { user-select: text !important; }
+
+/* ===== BLOOM CHART ===== */
+.bloom-chart {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-top: 24px;
+}
+.bloom-chart h3 {
+  font-family: 'Cairo', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.bloom-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+.bloom-row .b-label { width: 90px; color: var(--text2); text-align: right; }
+.bloom-row .b-bar-wrap { flex: 1; background: var(--surface3); border-radius: 4px; height: 10px; }
+.bloom-row .b-bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+.bloom-row .b-marks { width: 55px; text-align: left; color: var(--text2); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 3px; }
+
+/* Mobile */
+@media (max-width: 600px) {
+  .exam-header { padding: 12px 16px; }
+  .exam-header h1 { font-size: 14px; }
+  .welcome-card, .login-card { padding: 28px 20px; }
+  .exam-body { padding: 16px 12px; }
+  .section-header { flex-direction: column; gap: 8px; }
+  .tf-table td:first-child { font-size: 12px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .dashboard-body { padding: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== PASTE BLOCKED TOAST ===== -->
+<div class="paste-blocked-toast" id="pasteToast">⛔ اللصق غير مسموح في الامتحان</div>
+
+<!-- ============================= -->
+<!--       SCREEN: WELCOME         -->
+<!-- ============================= -->
+<div class="screen active" id="screen-welcome">
+  <div class="exam-header">
+    <img src="https://i.postimg.cc/G3ghK9PH/sml-byt-hspr.png" alt="شعار المدرسة">
+    <div class="header-info">
+      <h1>مدرسة البخاري الشاملة</h1>
+      <p>معلمة الموضوع: منى مصطفى</p>
+    </div>
+    <div class="header-badge">⭐ 100 علامة</div>
+  </div>
+
+  <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px;">
+    <div class="welcome-card">
+      <img src="https://i.postimg.cc/G3ghK9PH/sml-byt-hspr.png" alt="شعار المدرسة">
+      <div class="school-tag">مدرسة البخاري الشاملة</div>
+      <h2>🔬 امتحان فيزياء</h2>
+      <p>الصف السابع &nbsp;|&nbsp; موضوع: الحركة</p>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="showScreen('screen-login')">
+          🎓 دخول الطالب
+        </button>
+        <button class="btn btn-secondary" onclick="showScreen('screen-teacher-login')">
+          🔐 دخول المعلمة
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= -->
+<!--       SCREEN: LOGIN           -->
+<!-- ============================= -->
+<div class="screen" id="screen-login">
+  <div class="exam-header">
+    <img src="https://i.postimg.cc/G3ghK9PH/sml-byt-hspr.png" alt="">
+    <div class="header-info">
+      <h1>امتحان فيزياء | الصف السابع</h1>
+      <p>الحركة</p>
+    </div>
+  </div>
+
+  <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px;">
+    <div class="login-card">
+      <h2>🔑 أدخل رمزك الشخصي</h2>
+      <div class="code-hint">
+        📋 رمزك مكوّن من <strong>3 أحرف عربية + رقمك في القائمة</strong>:<br>
+        • <strong>الحرف الأول</strong> من اسمك<br>
+        • <strong>الحرف الأول</strong> من اسم والدك<br>
+        • <strong>الحرف الأول</strong> من اسم عائلتك<br>
+        • <strong>رقمك</strong> حسب قائمة الصف في iSKUR<br>
+        <div class="example">مثال: سارة محمود علي، رقم 7 → سمع7</div>
+      </div>
+      <div class="input-group">
+        <label>الرمز الشخصي</label>
+        <input type="text" id="codeInput" maxlength="10" placeholder="مثال: سمع7" autocomplete="off" spellcheck="false">
+        <div class="error-msg" id="codeError">⚠️ الرمز غير صحيح. تأكد من إدخال 3 أحرف ورقم.</div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="startExam()">ابدأ الامتحان ←</button>
+        <button class="btn btn-secondary" onclick="showScreen('screen-welcome')">← رجوع</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= -->
+<!--       SCREEN: EXAM            -->
+<!-- ============================= -->
+<div class="screen" id="screen-exam">
+
+  <!-- Top bar -->
+  <div class="exam-topbar">
+    <div class="student-badge" id="studentBadge">🎓 الطالب</div>
+    <div class="timer-display" id="timerDisplay">45:00</div>
+    <div class="progress-info">
+      <span id="progressText">0 / 10</span>
+    </div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+  </div>
+
+  <!-- Body -->
+  <div class="exam-body" id="examBody">
+    <!-- Injected by JS -->
+  </div>
+</div>
+
+<!-- ============================= -->
+<!--    SCREEN: SUCCESS            -->
+<!-- ============================= -->
+<div class="screen" id="screen-success">
+  <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px;">
+    <div class="success-card">
+      <div class="success-icon">✅</div>
+      <h2>تم تسليم الامتحان!</h2>
+      <p style="color:var(--text2); margin-bottom:20px;">تم حفظ إجاباتك بنجاح.</p>
+
+      <div class="score-display" id="scoreDisplay"></div>
+
+      <div class="feedback-warning">
+        ⚠️ الأسئلة المفتوحة ستُصحَّح يدوياً من المعلمة. العلامة النهائية ستُبلَّغ لاحقاً.
+      </div>
+
+      <!-- Rating -->
+      <div class="rating-section">
+        <h3>💬 رأيك يهمنا</h3>
+
+        <div class="rating-question">
+          <p>١. مستوى صعوبة الامتحان:</p>
+          <div class="rating-options" data-q="difficulty">
+            <span class="rating-opt" data-v="easy">😄 سهل جداً</span>
+            <span class="rating-opt" data-v="ok">🙂 مناسب</span>
+            <span class="rating-opt" data-v="hard">😐 صعب بعض الشيء</span>
+            <span class="rating-opt" data-v="vhard">😓 صعب جداً</span>
+          </div>
+        </div>
+
+        <div class="rating-question">
+          <p>٢. الوقت المخصص:</p>
+          <div class="rating-options" data-q="time">
+            <span class="rating-opt" data-v="more">⏰ أكثر من كافٍ</span>
+            <span class="rating-opt" data-v="enough">✅ كافٍ</span>
+            <span class="rating-opt" data-v="little">⏱️ قليل</span>
+            <span class="rating-opt" data-v="notenough">🚫 لم يكفِ</span>
+          </div>
+        </div>
+
+        <div class="rating-question">
+          <p>٣. وضوح الأسئلة:</p>
+          <div class="rating-options" data-q="clarity">
+            <span class="rating-opt" data-v="veryclear">💎 واضحة جداً</span>
+            <span class="rating-opt" data-v="clear">👍 واضحة</span>
+            <span class="rating-opt" data-v="some">🤔 بعضها غير واضح</span>
+            <span class="rating-opt" data-v="unclear">😕 غير واضحة</span>
+          </div>
+        </div>
+
+        <div class="rating-question">
+          <p>٤. التقييم العام:</p>
+          <div class="rating-options" data-q="overall">
+            <span class="rating-opt" data-v="5">⭐⭐⭐⭐⭐</span>
+            <span class="rating-opt" data-v="4">⭐⭐⭐⭐</span>
+            <span class="rating-opt" data-v="3">⭐⭐⭐</span>
+            <span class="rating-opt" data-v="2">⭐⭐</span>
+            <span class="rating-opt" data-v="1">⭐</span>
+          </div>
+        </div>
+
+        <div class="rating-question">
+          <p>٥. ملاحظة أو اقتراح (اختياري):</p>
+          <textarea class="answer-textarea" id="ratingNote" placeholder="اكتب ملاحظتك هنا..." rows="3"></textarea>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%; margin-top:16px;" onclick="submitRating()">
+          💜 أرسل تقييمك
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= -->
+<!--    SCREEN: TEACHER LOGIN      -->
+<!-- ============================= -->
+<div class="screen" id="screen-teacher-login">
+  <div class="exam-header">
+    <img src="https://i.postimg.cc/G3ghK9PH/sml-byt-hspr.png" alt="">
+    <div class="header-info"><h1>دخول المعلمة</h1></div>
+  </div>
+  <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px;">
+    <div class="login-card">
+      <h2>🔐 لوحة المعلمة</h2>
+      <div class="input-group">
+        <label>كلمة المرور</label>
+        <input type="password" id="teacherPass" placeholder="أدخل كلمة المرور" autocomplete="off">
+        <div class="error-msg" id="teacherError">⚠️ كلمة المرور غير صحيحة</div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-gold" onclick="teacherLogin()">دخول 🔓</button>
+        <button class="btn btn-secondary" onclick="showScreen('screen-welcome')">← رجوع</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================= -->
+<!--    SCREEN: TEACHER DASHBOARD  -->
+<!-- ============================= -->
+<div class="screen" id="screen-teacher">
+  <div class="dashboard-header">
+    <div>
+      <h1>📊 لوحة المعلمة</h1>
+      <p style="font-size:13px; color:var(--accent2); margin-top:4px;">منى مصطفى — فيزياء الصف السابع</p>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn btn-secondary" style="padding:8px 16px; font-size:13px;" onclick="downloadCSV()">⬇ CSV</button>
+      <button class="btn btn-secondary" style="padding:8px 16px; font-size:13px;" onclick="downloadFullReport()">⬇ تقرير كامل</button>
+      <button class="btn btn-secondary" style="padding:8px 16px; font-size:13px;" onclick="teacherLogout()">← خروج</button>
+    </div>
+  </div>
+
+  <div class="dashboard-body">
+    <!-- Stats -->
+    <div class="stats-grid" id="statsGrid"></div>
+
+    <!-- Students table -->
+    <div class="students-table-wrap">
+      <h3>
+        <span>قائمة الطلاب</span>
+        <span id="studentCount" style="font-size:13px; color:var(--text3); font-weight:400;"></span>
+      </h3>
+      <div id="studentsTableBody"></div>
+    </div>
+
+    <!-- Bloom chart -->
+    <div class="bloom-chart" id="bloomChartWrap"></div>
+  </div>
+</div>
+
+<!-- ============================= -->
+<!--    MODAL: STUDENT DETAIL      -->
+<!-- ============================= -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-box">
+    <h3>
+      <span id="modalStudentName">تفاصيل الطالب</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </h3>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ============================= -->
+<!--         JAVASCRIPT            -->
+<!-- ============================= -->
+<script>
+/* ============================================================
+   CONFIGURATION
+   ============================================================ */
+const TEACHER_PASSWORD = "mona2025";
+const EXAM_DURATION_MINUTES = 45;
+
+/* ============================================================
+   RANDOMIZATION SEEDS
+   Each student code generates a unique numeric seed.
+   All variable numbers are derived from this seed.
+   ============================================================ */
+function hashCode(str) {
+  let h = 5381;
+  for (let i = 0; i < str.length; i++) {
+    h = ((h << 5) + h) + str.charCodeAt(i);
+    h = h & h;
+  }
+  return Math.abs(h);
+}
+
+class SeededRandom {
+  constructor(seed) { this.seed = seed >>> 0; }
+  next() {
+    this.seed = (this.seed * 1664525 + 1013904223) & 0xffffffff;
+    return (this.seed >>> 0) / 0xffffffff;
+  }
+  int(min, max) { return Math.floor(this.next() * (max - min + 1)) + min; }
+  pick(arr) { return arr[Math.floor(this.next() * arr.length)]; }
+  shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(this.next() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+}
+
+function generateParams(code) {
+  const seed = hashCode(code);
+  const rng = new SeededRandom(seed);
+
+  // Q1b: V and X0 and t
+  const q1b_V  = rng.pick([2, 3, 4, 5]);
+  const q1b_X0 = rng.pick([5, 8, 10, 12, 15]);
+  const q1b_t  = rng.pick([3, 4, 5, 6]);
+  const q1b_correct = q1b_X0 + q1b_V * q1b_t;
+
+  // Q3: V and X0
+  const q3_V  = rng.pick([3, 4, 5, 6]);
+  const q3_X0 = rng.pick([1, 2, 3, 5]);
+  const q3_t2 = 2, q3_t3 = 4;
+  // X = X0 + Vt values
+  const q3_x2 = q3_X0 + q3_V * q3_t2;
+  const q3_x3 = q3_X0 + q3_V * q3_t3;
+  // Find t for given X values
+  const q3_x4 = q3_X0 + q3_V * rng.pick([3,4,5]);
+  const q3_x5 = q3_X0 + q3_V * rng.pick([6,7,8]);
+  const q3_t4 = (q3_x4 - q3_X0) / q3_V;
+  const q3_t5 = (q3_x5 - q3_X0) / q3_V;
+
+  // Q4: X0 and V
+  const q4_X0 = rng.pick([3, 5, 7, 8]);
+  const q4_V  = rng.pick([4, 5, 6, 7]);
+  const q4_t  = rng.pick([2, 3, 4]);
+  const q4_x  = q4_X0 + q4_V * q4_t;
+
+  // Q5a: a and t
+  const q5a_a = rng.pick([2, 3, 4]);
+  const q5a_t = rng.pick([4, 5, 6]);
+  const q5a_V = q5a_a * q5a_t;
+
+  // Q5b: V0 and a
+  const q5b_V0 = rng.pick([8, 10, 12, 15]);
+  const q5b_a  = rng.pick([2, 3, 4]);
+  const q5b_t  = q5b_V0 / q5b_a;
+
+  // Q6: a
+  const q6_a = rng.pick([2, 3, 4]);
+
+  // Q7: V0 and a
+  const q7_V0 = rng.pick([16, 20, 24]);
+  const q7_a  = rng.pick([3, 4, 5]);
+  const q7_t  = q7_V0 / q7_a;
+
+  // Q8 graph: X0, two slopes
+  const q8_X0 = rng.pick([5, 8, 10, 12]);
+  const q8_v1 = rng.pick([3, 4, 5]);
+  const q8_v2 = rng.pick([6, 8, 10]);
+
+  // Q9 graph: V0 and a
+  const q9_V0 = rng.pick([4, 5, 6, 8]);
+  const q9_a  = rng.pick([2, 3]);
+
+  // Q10: a for cart
+  const q10_a = rng.pick([2, 2.5, 3]);
+
+  return {
+    q1b_V, q1b_X0, q1b_t, q1b_correct,
+    q3_V, q3_X0, q3_x2, q3_x3, q3_x4, q3_x5, q3_t4, q3_t5,
+    q4_X0, q4_V, q4_t, q4_x,
+    q5a_a, q5a_t, q5a_V,
+    q5b_V0, q5b_a, q5b_t,
+    q6_a,
+    q7_V0, q7_a, q7_t,
+    q8_X0, q8_v1, q8_v2,
+    q9_V0, q9_a,
+    q10_a
+  };
+}
+
+/* ============================================================
+   EXAM ANSWERS STORAGE (in-memory)
+   ============================================================ */
+const submissions = {}; // { code: { name, time, params, answers, autoScore, rating } }
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let currentCode = '';
+let currentParams = null;
+let timerInterval = null;
+let timerSeconds = EXAM_DURATION_MINUTES * 60;
+let examAnswers = {};
+
+/* ============================================================
+   SCREEN NAVIGATION
+   ============================================================ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   STUDENT LOGIN
+   ============================================================ */
+function validateCode(code) {
+  // At least 2 Arabic chars + at least 1 digit
+  return /^[\u0600-\u06FF]{2,}[0-9]+$/.test(code.trim());
+}
+
+function startExam() {
+  const input = document.getElementById('codeInput');
+  const code = input.value.trim();
+  const err = document.getElementById('codeError');
+
+  if (!validateCode(code)) {
+    err.style.display = 'block';
+    input.style.borderColor = 'var(--red)';
+    return;
+  }
+
+  err.style.display = 'none';
+  input.style.borderColor = '';
+  currentCode = code;
+  currentParams = generateParams(code);
+  examAnswers = {};
+
+  buildExam();
+  showScreen('screen-exam');
+  startTimer();
+}
+
+/* ============================================================
+   TIMER
+   ============================================================ */
+function startTimer() {
+  timerSeconds = EXAM_DURATION_MINUTES * 60;
+  updateTimerDisplay();
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timerSeconds--;
+    updateTimerDisplay();
+    if (timerSeconds <= 0) {
+      clearInterval(timerInterval);
+      autoSubmit();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60);
+  const s = timerSeconds % 60;
+  const el = document.getElementById('timerDisplay');
+  el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  el.className = 'timer-display' + (timerSeconds < 300 ? ' warning' : '');
+}
+
+function autoSubmit() {
+  alert('⏰ انتهى وقت الامتحان! سيتم تسليم إجاباتك تلقائياً.');
+  submitExam(true);
+}
+
+/* ============================================================
+   BUILD EXAM
+   ============================================================ */
+function buildExam() {
+  const p = currentParams;
+  document.getElementById('studentBadge').textContent = `🎓 ${currentCode}`;
+
+  const html = `
+    <div class="personalized-notice">
+      <span class="lock-icon">🔐</span>
+      امتحانك الشخصي — الأرقام مخصصة لرمزك <strong style="color:var(--gold)">${currentCode}</strong>
+    </div>
+
+    <!-- =============== SECTION 1 =============== -->
+    <div class="section-header">
+      <div>
+        <h2>📐 القسم الأول — الحركة بسرعة ثابتة</h2>
+        <div class="section-law">X = X₀ + Vt</div>
+      </div>
+      <div class="section-marks">40 علامة</div>
+    </div>
+
+    <!-- Q1 -->
+    <div class="question-card" id="qcard-1">
+      <div class="question-header">
+        <span class="question-title">
+          <span class="q-tag recall">🧠 تذكر</span>
+          السؤال 1 — اختيار متعدد
+        </span>
+        <span class="question-marks">12 علامة</span>
+      </div>
+      <div class="question-body">
+
+        <!-- Q1a -->
+        <div class="sub-question">
+          <div class="q-text">أ. في المعادلة X = X₀ + Vt، ماذا يمثل X₀؟</div>
+          <div class="mcq-options" id="q1a">
+            ${buildMCQ('q1a', ['السرعة اللحظية للجسم','موقع الجسم في بداية الحركة (t = 0)','الزمن الكلي للحركة','التسارع'], 1)}
+          </div>
+        </div>
+
+        <div class="q-divider"></div>
+
+        <!-- Q1b — RANDOMIZED -->
+        <div class="sub-question">
+          <div class="q-text">ب. جسم يتحرك بسرعة ثابتة
+            <span class="highlight">V = ${p.q1b_V} m/s</span>، وموقعه الابتدائي
+            <span class="highlight">X₀ = ${p.q1b_X0} m</span>.
+            ما موقعه بعد <span class="highlight">${p.q1b_t} ثوانٍ</span>؟
+          </div>
+          ${buildMCQ_computed('q1b', p.q1b_correct, p.q1b_X0, p.q1b_V, p.q1b_t)}
+        </div>
+
+        <div class="q-divider"></div>
+
+        <!-- Q1c -->
+        <div class="sub-question">
+          <div class="q-text">ج. الرسم البياني لموقع جسم يتحرك بسرعة ثابتة كدالة للزمن يكون:</div>
+          <div class="mcq-options" id="q1c">
+            ${buildMCQ('q1c', ['منحنى متزايد','خطاً مستقيماً','خطاً أفقياً دائماً','منحنى تربيعياً'], 1)}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Q2: True/False -->
+    <div class="question-card" id="qcard-2">
+      <div class="question-header">
+        <span class="question-title"><span class="q-tag recall">🧠 تذكر</span> السؤال 2 — صح أم خطأ</span>
+        <span class="question-marks">10 علامات</span>
+      </div>
+      <div class="question-body">
+        <table class="tf-table">
+          <thead><tr><th>العبارة</th><th style="width:120px; text-align:center;">الإجابة</th></tr></thead>
+          <tbody>
+            ${buildTF([
+              'إذا كان ميل الرسم البياني للموقع كدالة للزمن سالباً، فإن الجسم يتحرك في الاتجاه السالب.',
+              'نقطة تقاطع الرسم البياني مع المحور العامودي (محور X) تمثل موقع الجسم في بداية القياس.',
+              'الجسم الذي يتحرك بسرعة ثابتة يكون رسمه البياني (X بدلالة t) خطاً مستقيماً.',
+              'ميل الرسم البياني لموقع الجسم كدالة للزمن يمثل التسارع.',
+              'يمكن حساب السرعة من الجدول باستخدام نقطة واحدة فقط.'
+            ])}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Q3: Fill table (RANDOMIZED) -->
+    <div class="question-card" id="qcard-3">
+      <div class="question-header">
+        <span class="question-title"><span class="q-tag understand">💡 فهم</span> السؤال 3 — أكمل الجدول</span>
+        <span class="question-marks">10 علامات</span>
+      </div>
+      <div class="question-body">
+        <p class="q-text">جسم يتحرك بسرعة ثابتة
+          <span class="highlight">V = ${p.q3_V} m/s</span>، وموقعه الابتدائي
+          <span class="highlight">X₀ = ${p.q3_X0} m</span>
+        </p>
+        <table class="data-table">
+          <thead><tr><th>الزمن t (s)</th><th>الموقع X (m)</th></tr></thead>
+          <tbody>
+            <tr><td class="given">0</td><td class="given">${p.q3_X0}</td></tr>
+            <tr><td class="given">2</td><td><input type="text" id="q3_r1" placeholder="؟" onpaste="blockPaste(event)" oninput="markAnswered('qcard-3')"></td></tr>
+            <tr><td class="given">4</td><td><input type="text" id="q3_r2" placeholder="؟" onpaste="blockPaste(event)" oninput="markAnswered('qcard-3')"></td></tr>
+            <tr><td><input type="text" id="q3_r3" placeholder="؟" onpaste="blockPaste(event)" oninput="markAnswered('qcard-3')"></td><td class="given">${p.q3_x4}</td></tr>
+            <tr><td><input type="text" id="q3_r4" placeholder="؟" onpaste="blockPaste(event)" oninput="markAnswered('qcard-3')"></td><td class="given">${p.q3_x5}</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Q4: Short answer (RANDOMIZED) -->
+    <div class="question-card" id="qcard-4">
+      <div class="question-header">
+        <span class="question-title"><span class="q-tag apply">✏️ تطبيق</span> السؤال 4 — إجابات قصيرة</span>
+        <span class="question-marks">8 علامات</span>
+      </div>
+      <div class="question-body">
+        <div class="sub-question">
+          <div class="q-text">أ. جسم موقعه الابتدائي
+            <span class="highlight">X₀ = ${p.q4_X0} m</span>
+            ويتحرك بسرعة
+            <span class="highlight">V = ${p.q4_V} m/s</span>.
+            اكتب المعادلة الرياضية التي تصف موقعه كدالة للزمن:
+          </div>
+          <textarea class="answer-textarea" id="q4a" rows="2" placeholder="اكتب المعادلة..." onpaste="blockPaste(event)" oninput="markAnswered('qcard-4')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">ب. ما هو موقع الجسم بعد مرور <span class="highlight">${p.q4_t} ثوانٍ</span>؟</div>
+          <textarea class="answer-textarea" id="q4b" rows="2" placeholder="الحل..." onpaste="blockPaste(event)" oninput="markAnswered('qcard-4')"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============== SECTION 2 =============== -->
+    <div class="section-header">
+      <div>
+        <h2>⚡ القسم الثاني — الحركة بتسارع ثابت</h2>
+        <div class="section-law">V = V₀ + at</div>
+      </div>
+      <div class="section-marks">20 علامة</div>
+    </div>
+
+    <!-- Q5: MCQ (RANDOMIZED) -->
+    <div class="question-card" id="qcard-5">
+      <div class="question-header">
+        <span class="question-title"><span class="q-tag understand">💡 فهم</span> السؤال 5 — اختيار متعدد</span>
+        <span class="question-marks">8 علامات</span>
+      </div>
+      <div class="question-body">
+
+        <div class="sub-question">
+          <div class="q-text">أ. سيارة تبدأ من السكون وتتسارع بتسارع
+            <span class="highlight">a = ${p.q5a_a} m/s²</span>.
+            ما سرعتها بعد <span class="highlight">${p.q5a_t} ثوانٍ</span>؟
+          </div>
+          ${buildMCQ_velocity('q5a', p.q5a_V, p.q5a_a, p.q5a_t)}
+        </div>
+
+        <div class="q-divider"></div>
+
+        <div class="sub-question">
+          <div class="q-text">ب. جسم يتحرك بسرعة ابتدائية
+            <span class="highlight">V₀ = ${p.q5b_V0} m/s</span>
+            وتسارع
+            <span class="highlight">a = -${p.q5b_a} m/s²</span>.
+            متى يتوقف الجسم؟
+          </div>
+          ${buildMCQ_stop('q5b', p.q5b_t, p.q5b_V0, p.q5b_a)}
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Q6: Fill table (RANDOMIZED) -->
+    <div class="question-card" id="qcard-6">
+      <div class="question-header">
+        <span class="question-title"><span class="q-tag understand">💡 فهم</span> السؤال 6 — أكمل الجدول</span>
+        <span class="question-marks">6 علامات</span>
+      </div>
+      <div class="question-body">
+        <p class="q-text">جسم بدأ من السكون (V₀ = 0) بتسارع <span class="highlight">a = ${p.q6_a} m/s²</span></p>
+        <table class="data-table">
+          <thead><tr><th>الزمن t (s)</th><th>السرعة V (m/s)</th></tr></thead>
+          <tbody>
+            <tr><td class="given">0</td><td class="given">0</td></tr>
+            <tr><td class="given">2</td><td><input type="text" id="q6_r1" placeholder="؟" onpaste="blockPaste(event)" oninput="markAnswered('qcard-6')"></td></tr>
+            <tr><td class="given">4</td><td><input type="text" id="q6_r2" placeholder="؟" onpaste="blockPaste(event)" oninput="markAnswered('qcard-6')"></td></tr>
+            <tr><td><input type="text" id="q6_r3" placeholder="؟" onpaste="blockPaste(event)" oninput="markAnswered('qcard-6')"></td><td class="given">${p.q6_a * 5}</td></tr>
+            <tr><td class="given">7</td><td><input type="text" id="q6_r4" placeholder="؟" onpaste="blockPaste(event)" oninput="markAnswered('qcard-6')"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Q7 (RANDOMIZED) -->
+    <div class="question-card" id="qcard-7">
+      <div class="question-header">
+        <span class="question-title"><span class="q-tag apply">✏️ تطبيق</span> السؤال 7 — تحليل وتطبيق</span>
+        <span class="question-marks">6 علامات</span>
+      </div>
+      <div class="question-body">
+        <p class="q-text">قطار يتحرك بسرعة ابتدائية
+          <span class="highlight">V₀ = ${p.q7_V0} m/s</span>
+          ويكبح (يتباطأ) بتسارع
+          <span class="highlight">a = -${p.q7_a} m/s²</span>.
+        </p>
+        <div class="sub-question">
+          <div class="q-text">أ. اكتب المعادلة الرياضية التي تصف سرعة القطار كدالة للزمن:</div>
+          <textarea class="answer-textarea" id="q7a" rows="2" placeholder="اكتب المعادلة..." onpaste="blockPaste(event)" oninput="markAnswered('qcard-7')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">ب. احسب بعد كم ثانية يتوقف القطار:</div>
+          <textarea class="answer-textarea" id="q7b" rows="2" placeholder="الحل..." onpaste="blockPaste(event)" oninput="markAnswered('qcard-7')"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============== SECTION 3 =============== -->
+    <div class="section-header">
+      <div>
+        <h2>📈 القسم الثالث — قراءة الرسوم البيانية</h2>
+      </div>
+      <div class="section-marks">20 علامة</div>
+    </div>
+
+    <!-- Q8: X-t graph -->
+    <div class="question-card" id="qcard-8">
+      <div class="question-header">
+        <span class="question-title"><span class="q-tag analyze">🔬 تحليل</span> السؤال 8 — رسم بياني للموقع</span>
+        <span class="question-marks">12 علامة</span>
+      </div>
+      <div class="question-body">
+        <div class="graph-container">
+          <div class="graph-title">رسم بياني للموقع (X) بدلالة الزمن (t)</div>
+          <canvas class="graph-canvas" id="graph8" width="500" height="300"></canvas>
+        </div>
+
+        <div class="sub-question">
+          <div class="q-text">أ. ما هو موقع السيارة في بداية القياس (t = 0)؟</div>
+          <textarea class="answer-textarea" id="q8a" rows="2" placeholder="الإجابة..." onpaste="blockPaste(event)" oninput="markAnswered('qcard-8')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">ب. احسب سرعة السيارة في المرحلة الأولى (من t=0 إلى t=4s):</div>
+          <textarea class="answer-textarea" id="q8b" rows="2" placeholder="الحل..." onpaste="blockPaste(event)" oninput="markAnswered('qcard-8')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">ج. هل السرعة في المرحلة الأولى والثانية متساوية؟ فسّر:</div>
+          <textarea class="answer-textarea" id="q8c" rows="3" placeholder="الإجابة والتفسير..." onpaste="blockPaste(event)" oninput="markAnswered('qcard-8')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">د. في أي مرحلة تتحرك السيارة بشكل أسرع؟</div>
+          <div class="mcq-options" id="q8d">
+            ${buildMCQ('q8d', ['المرحلة الأولى','المرحلة الثانية','السرعتان متساويتان'], p.q8_v2 > p.q8_v1 ? 1 : 0)}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q9: V-t graph -->
+    <div class="question-card" id="qcard-9">
+      <div class="question-header">
+        <span class="question-title"><span class="q-tag analyze">🔬 تحليل</span> السؤال 9 — رسم بياني للسرعة</span>
+        <span class="question-marks">8 علامات</span>
+      </div>
+      <div class="question-body">
+        <div class="graph-container">
+          <div class="graph-title">رسم بياني للسرعة (V) بدلالة الزمن (t)</div>
+          <canvas class="graph-canvas" id="graph9" width="500" height="260"></canvas>
+        </div>
+
+        <div class="sub-question">
+          <div class="q-text">أ. ما هي السرعة الابتدائية للجسم (V₀)؟</div>
+          <textarea class="answer-textarea" id="q9a" rows="2" placeholder="الإجابة..." onpaste="blockPaste(event)" oninput="markAnswered('qcard-9')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">ب. هل الجسم يتحرك بسرعة ثابتة أم بتسارع؟ كيف عرفت ذلك من الرسم البياني؟</div>
+          <textarea class="answer-textarea" id="q9b" rows="3" placeholder="الإجابة والتفسير..." onpaste="blockPaste(event)" oninput="markAnswered('qcard-9')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">ج. احسب التسارع من الرسم البياني:</div>
+          <textarea class="answer-textarea" id="q9c" rows="2" placeholder="الحل..." onpaste="blockPaste(event)" oninput="markAnswered('qcard-9')"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- =============== SECTION 4 =============== -->
+    <div class="section-header">
+      <div><h2>🔭 القسم الرابع — مهارات البحث العلمي</h2></div>
+      <div class="section-marks">20 علامة</div>
+    </div>
+
+    <!-- Q10 (RANDOMIZED) -->
+    <div class="question-card" id="qcard-10">
+      <div class="question-header">
+        <span class="question-title"><span class="q-tag evaluate">🏆 تقييم</span> السؤال 10 — تجربة العربة</span>
+        <span class="question-marks">20 علامة</span>
+      </div>
+      <div class="question-body">
+        <p class="q-text">أُجريت تجربة لدراسة حركة عربة تنزلق على مسار مائل أملس. بدأت العربة من السكون (V₀ = 0).<br>
+        التسارع الملاحَظ: <span class="highlight">${p.q10_a} m/s²</span></p>
+
+        <table class="experiment-table">
+          <thead><tr><th>الزمن t (s)</th><th>السرعة V (m/s)</th></tr></thead>
+          <tbody>
+            ${[0,1,2,3,4,5].map(t =>
+              `<tr><td>${t}</td><td>${(p.q10_a * t).toFixed(1)}</td></tr>`
+            ).join('')}
+          </tbody>
+        </table>
+
+        <div class="sub-question">
+          <div class="q-text">أ. (فهم) ما العلاقة بين السرعة والزمن التي تُظهرها نتائج التجربة؟</div>
+          <textarea class="answer-textarea" id="q10a" rows="3" onpaste="blockPaste(event)" oninput="markAnswered('qcard-10')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">ب. (فهم) ما هو التسارع في هذه التجربة؟ احسبه من الجدول مع إظهار الحل:</div>
+          <textarea class="answer-textarea" id="q10b" rows="3" onpaste="blockPaste(event)" oninput="markAnswered('qcard-10')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">ج. (تفسير) لماذا تكون السرعة في t=0 تساوي صفراً؟</div>
+          <textarea class="answer-textarea" id="q10c" rows="3" onpaste="blockPaste(event)" oninput="markAnswered('qcard-10')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">د. (تفسير) ماذا يحدث للحركة لو كانت المنحدرة خشنة (بها احتكاك)؟ هل سيتغير التسارع؟ كيف؟</div>
+          <textarea class="answer-textarea" id="q10d" rows="3" onpaste="blockPaste(event)" oninput="markAnswered('qcard-10')"></textarea>
+        </div>
+        <div class="sub-question">
+          <div class="q-text">هـ. (استنتاج) اكتب المعادلة الرياضية التي تصف حركة العربة (V كدالة t):</div>
+          <textarea class="answer-textarea" id="q10e" rows="2" onpaste="blockPaste(event)" oninput="markAnswered('qcard-10')"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bloom summary -->
+    <div class="bloom-chart">
+      <h3>📊 توزيع مستويات الأسئلة — سلّم بلوم</h3>
+      ${buildBloomChart()}
+    </div>
+
+    <!-- Submit -->
+    <div style="padding:24px 0;">
+      <p style="color:var(--text2); font-size:14px; margin-bottom:16px; text-align:center;">تأكد من الإجابة على جميع الأسئلة قبل التسليم.</p>
+      <button class="btn btn-gold" style="width:100%; font-size:18px; padding:18px;" onclick="submitExam(false)">
+        ✅ تسليم الامتحان
+      </button>
+    </div>
+  `;
+
+  document.getElementById('examBody').innerHTML = html;
+
+  // Draw graphs after render
+  setTimeout(() => {
+    drawGraph8(currentParams);
+    drawGraph9(currentParams);
+  }, 100);
+
+  // Block paste on ALL textareas and text inputs
+  document.querySelectorAll('#screen-exam textarea, #screen-exam input[type=text]').forEach(el => {
+    el.addEventListener('paste', blockPaste);
+  });
+
+  updateProgress();
+}
+
+/* ============================================================
+   MCQ BUILDERS
+   ============================================================ */
+function buildMCQ(id, options, correctIdx) {
+  return `<div class="mcq-options" id="${id}">` +
+    options.map((opt, i) =>
+      `<label class="mcq-option" onclick="selectMCQ('${id}', ${i})">
+        <input type="radio" name="${id}" value="${i}">
+        <span class="opt-letter">${['أ','ب','ج','د'][i]}</span>
+        <span class="opt-text">${opt}</span>
+       </label>`
+    ).join('') +
+  `</div>`;
+}
+
+function buildMCQ_computed(id, correct, X0, V, t) {
+  // Generate 3 wrong answers
+  const wrongs = [
+    X0 + V * (t + 1),
+    X0 + V * (t - 1),
+    X0 * V
+  ].filter(w => w !== correct && w > 0);
+  const options = shuffleArray([
+    { label: `X = ${correct} m`, correct: true },
+    { label: `X = ${wrongs[0]} m`, correct: false },
+    { label: `X = ${wrongs[1]} m`, correct: false },
+    { label: `X = ${wrongs[2]} m`, correct: false },
+  ]);
+  const correctIdx = options.findIndex(o => o.correct);
+  return buildMCQ(id, options.map(o => o.label), correctIdx);
+}
+
+function buildMCQ_velocity(id, correct, a, t) {
+  const opts = shuffleArray([
+    { label: `V = ${correct} m/s`, correct: true },
+    { label: `V = ${a + t} m/s`, correct: false },
+    { label: `V = ${correct + 2} m/s`, correct: false },
+    { label: `V = ${a} m/s`, correct: false },
+  ]);
+  return buildMCQ(id, opts.map(o => o.label), opts.findIndex(o => o.correct));
+}
+
+function buildMCQ_stop(id, correct, V0, a) {
+  const opts = shuffleArray([
+    { label: `بعد t = ${correct} s`, correct: true },
+    { label: `بعد t = ${correct * 2} s`, correct: false },
+    { label: `بعد t = ${Math.max(1, correct - 2)} s`, correct: false },
+    { label: `لا يتوقف`, correct: false },
+  ]);
+  return buildMCQ(id, opts.map(o => o.label), opts.findIndex(o => o.correct));
+}
+
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildTF(statements) {
+  return statements.map((s, i) => `
+    <tr>
+      <td>${s}</td>
+      <td>
+        <div class="tf-buttons">
+          <button class="tf-btn" id="tf_${i}_T" onclick="selectTF(${i}, true)">✓ صح</button>
+          <button class="tf-btn" id="tf_${i}_F" onclick="selectTF(${i}, false)">✗ خطأ</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function buildBloomChart() {
+  const levels = [
+    { label: '🧠 تذكر', marks: 22, color: '#8b5cf6', qs: 'س1 + س2' },
+    { label: '💡 فهم', marks: 24, color: '#06b6d4', qs: 'س3 + س5 + س6' },
+    { label: '✏️ تطبيق', marks: 14, color: '#f59e0b', qs: 'س4 + س7' },
+    { label: '🔬 تحليل', marks: 20, color: '#10b981', qs: 'س8 + س9' },
+    { label: '🏆 تقييم', marks: 20, color: '#ef4444', qs: 'س10' },
+  ];
+  return levels.map(l => `
+    <div class="bloom-row">
+      <div class="b-label">${l.label}</div>
+      <div class="b-bar-wrap">
+        <div class="b-bar" style="width:${l.marks}%; background:${l.color};"></div>
+      </div>
+      <div class="b-marks">${l.marks} علامة</div>
+    </div>
+  `).join('');
+}
+
+/* ============================================================
+   MCQ / TF SELECTION
+   ============================================================ */
+function selectMCQ(id, idx) {
+  const container = document.getElementById(id);
+  if (!container) return;
+  container.querySelectorAll('.mcq-option').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+  });
+  examAnswers[id] = idx;
+  updateProgress();
+
+  // Mark parent card as answered
+  const card = container.closest('.question-card');
+  if (card) card.classList.add('answered');
+}
+
+function selectTF(row, val) {
+  document.getElementById(`tf_${row}_T`).className = 'tf-btn' + (val ? ' active-true' : '');
+  document.getElementById(`tf_${row}_F`).className = 'tf-btn' + (!val ? ' active-false' : '');
+  examAnswers[`tf_${row}`] = val;
+  updateProgress();
+  markAnswered('qcard-2');
+}
+
+function markAnswered(cardId) {
+  const card = document.getElementById(cardId);
+  if (card) card.classList.add('answered');
+  updateProgress();
+}
+
+/* ============================================================
+   PROGRESS
+   ============================================================ */
+function updateProgress() {
+  const total = 10;
+  const answered = document.querySelectorAll('#screen-exam .question-card.answered').length;
+  document.getElementById('progressText').textContent = `${answered} / ${total}`;
+  document.getElementById('progressBar').style.width = `${(answered / total) * 100}%`;
+}
+
+/* ============================================================
+   ANTI-PASTE
+   ============================================================ */
+function blockPaste(e) {
+  e.preventDefault();
+  const toast = document.getElementById('pasteToast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+/* ============================================================
+   GRAPH DRAWING — Q8 (X-t)
+   ============================================================ */
+function drawGraph8(p) {
+  const canvas = document.getElementById('graph8');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = { top: 30, right: 30, bottom: 50, left: 60 };
+
+  const { q8_X0, q8_v1, q8_v2 } = p;
+  // Two segments: t=0 to t=4 (slope v1), t=4 to t=8 (slope v2)
+  const points = [
+    { t: 0, x: q8_X0 },
+    { t: 4, x: q8_X0 + q8_v1 * 4 },
+    { t: 8, x: q8_X0 + q8_v1 * 4 + q8_v2 * 4 }
+  ];
+  const maxT = 8, maxX = points[2].x + 5;
+
+  function tx(t) { return pad.left + (t / maxT) * (W - pad.left - pad.right); }
+  function ty(x) { return H - pad.bottom - (x / maxX) * (H - pad.top - pad.bottom); }
+
+  // Background
+  ctx.fillStyle = '#1f2937';
+  ctx.fillRect(0, 0, W, H);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 8; i++) {
+    ctx.beginPath(); ctx.moveTo(tx(i), pad.top); ctx.lineTo(tx(i), H - pad.bottom); ctx.stroke();
+  }
+  for (let i = 0; i <= 10; i++) {
+    const xv = (maxX / 10) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, ty(xv)); ctx.lineTo(W - pad.right, ty(xv)); ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(pad.left, pad.top); ctx.lineTo(pad.left, H - pad.bottom); ctx.lineTo(W - pad.right, H - pad.bottom);
+  ctx.stroke();
+
+  // Graph line
+  const gradient = ctx.createLinearGradient(tx(0), 0, tx(8), 0);
+  gradient.addColorStop(0, '#2563eb');
+  gradient.addColorStop(0.5, '#06b6d4');
+  gradient.addColorStop(1, '#10b981');
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  points.forEach((pt, i) => {
+    if (i === 0) ctx.moveTo(tx(pt.t), ty(pt.x));
+    else ctx.lineTo(tx(pt.t), ty(pt.x));
+  });
+  ctx.stroke();
+
+  // Points
+  points.forEach(pt => {
+    ctx.fillStyle = '#f59e0b';
+    ctx.beginPath();
+    ctx.arc(tx(pt.t), ty(pt.x), 5, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // Phase labels
+  ctx.font = '12px Tajawal, sans-serif';
+  ctx.fillStyle = '#9ca3af';
+  ctx.textAlign = 'center';
+  ctx.fillText('المرحلة ١', tx(2), ty((q8_X0 + points[1].x) / 2) - 10);
+  ctx.fillText('المرحلة ٢', tx(6), ty((points[1].x + points[2].x) / 2) - 10);
+
+  // Axis labels
+  ctx.fillStyle = '#6b7280';
+  ctx.font = '13px Cairo, sans-serif';
+  ctx.textAlign = 'center';
+  for (let i = 0; i <= 8; i += 2) {
+    ctx.fillText(i, tx(i), H - pad.bottom + 18);
+  }
+  ctx.fillStyle = '#6b7280';
+  ctx.textAlign = 'right';
+  [q8_X0, points[1].x, points[2].x].forEach(xv => {
+    ctx.fillText(Math.round(xv), pad.left - 8, ty(xv) + 4);
+  });
+
+  // Axis titles
+  ctx.fillStyle = '#9ca3af';
+  ctx.font = 'bold 13px Cairo, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('الزمن t (s)', W / 2, H - 8);
+  ctx.save();
+  ctx.translate(16, H / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText('الموقع X (m)', 0, 0);
+  ctx.restore();
+
+  // Dashed line at t=4
+  ctx.strokeStyle = 'rgba(245,158,11,0.3)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([5, 5]);
+  ctx.beginPath();
+  ctx.moveTo(tx(4), pad.top); ctx.lineTo(tx(4), H - pad.bottom);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+/* ============================================================
+   GRAPH DRAWING — Q9 (V-t)
+   ============================================================ */
+function drawGraph9(p) {
+  const canvas = document.getElementById('graph9');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const pad = { top: 30, right: 30, bottom: 50, left: 60 };
+
+  const { q9_V0, q9_a } = p;
+  const maxT = 8;
+  const maxV = q9_V0 + q9_a * maxT + 4;
+
+  function tx(t) { return pad.left + (t / maxT) * (W - pad.left - pad.right); }
+  function tv(v) { return H - pad.bottom - (v / maxV) * (H - pad.top - pad.bottom); }
+
+  // BG
+  ctx.fillStyle = '#1f2937';
+  ctx.fillRect(0, 0, W, H);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 8; i++) {
+    ctx.beginPath(); ctx.moveTo(tx(i), pad.top); ctx.lineTo(tx(i), H - pad.bottom); ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(pad.left, pad.top); ctx.lineTo(pad.left, H - pad.bottom); ctx.lineTo(W - pad.right, H - pad.bottom);
+  ctx.stroke();
+
+  // Graph line
+  const gradient = ctx.createLinearGradient(tx(0), 0, tx(maxT), 0);
+  gradient.addColorStop(0, '#8b5cf6');
+  gradient.addColorStop(1, '#06b6d4');
+  ctx.strokeStyle = gradient;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(tx(0), tv(q9_V0));
+  ctx.lineTo(tx(maxT), tv(q9_V0 + q9_a * maxT));
+  ctx.stroke();
+
+  // Points
+  [0, 2, 4, 6, 8].forEach(t => {
+    const v = q9_V0 + q9_a * t;
+    ctx.fillStyle = '#f59e0b';
+    ctx.beginPath(); ctx.arc(tx(t), tv(v), 5, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#9ca3af';
+    ctx.font = '11px Tajawal';
+    ctx.textAlign = 'left';
+    ctx.fillText(v, tx(t) + 7, tv(v) - 5);
+  });
+
+  // Axis labels
+  ctx.fillStyle = '#6b7280';
+  ctx.font = '13px Cairo, sans-serif';
+  ctx.textAlign = 'center';
+  for (let i = 0; i <= 8; i += 2) ctx.fillText(i, tx(i), H - pad.bottom + 18);
+
+  ctx.fillStyle = '#9ca3af';
+  ctx.font = 'bold 13px Cairo, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('الزمن t (s)', W / 2, H - 8);
+  ctx.save();
+  ctx.translate(16, H / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText('السرعة V (m/s)', 0, 0);
+  ctx.restore();
+}
+
+/* ============================================================
+   SUBMIT
+   ============================================================ */
+function submitExam(auto) {
+  if (timerInterval) clearInterval(timerInterval);
+
+  // Collect all answers
+  const p = currentParams;
+  const a = examAnswers;
+
+  // Auto-score MCQ and TF
+  let autoScore = 0;
+
+  // Q1a: correct = index 1 ("موقع الجسم في بداية الحركة")
+  if (a['q1a'] === 1) autoScore += 4;
+  // Q1b: correct depends on shuffled options — skip auto for simplicity (teacher grades)
+  // Q1c: correct = index 1 ("خطاً مستقيماً")
+  if (a['q1c'] === 1) autoScore += 4;
+
+  // Q2 TF: correct answers: T,T,T,F,F
+  const tfCorrect = [true, true, true, false, false];
+  for (let i = 0; i < 5; i++) {
+    if (a[`tf_${i}`] === tfCorrect[i]) autoScore += 2;
+  }
+
+  // Q8d
+  // Already handled by MCQ selection
+
+  // Q3 table
+  const q3_answers = {
+    q3_r1: p.q3_x2.toString(),
+    q3_r2: p.q3_x3.toString(),
+    q3_r3: p.q3_t4.toString(),
+    q3_r4: p.q3_t5.toString()
+  };
+  Object.entries(q3_answers).forEach(([id, correct]) => {
+    const el = document.getElementById(id);
+    if (el && parseFloat(el.value) === parseFloat(correct)) autoScore += 2;
+  });
+
+  // Q5a MCQ (teacher grades since shuffled)
+  // Q6 table
+  const q6a = p.q6_a;
+  const q6_correct = {
+    q6_r1: (q6a * 2).toString(),
+    q6_r2: (q6a * 4).toString(),
+    q6_r3: '5',
+    q6_r4: (q6a * 7).toString()
+  };
+  Object.entries(q6_correct).forEach(([id, correct]) => {
+    const el = document.getElementById(id);
+    if (el && parseFloat(el.value) === parseFloat(correct)) autoScore += 1;
+  });
+
+  // Save submission
+  const submission = {
+    code: currentCode,
+    time: new Date().toLocaleString('ar'),
+    params: JSON.stringify(p),
+    answers: collectAllAnswers(),
+    autoScore,
+    manualScore: null,
+    totalScore: null,
+    rating: {}
+  };
+  submissions[currentCode] = submission;
+
+  // Build score display
+  const html = `
+    <div class="score-row"><span class="label">الطالب</span><span class="val">${currentCode}</span></div>
+    <div class="score-row"><span class="label">العلامة التلقائية (MCQ + TF + الجداول)</span><span class="val auto">~${autoScore} / 42</span></div>
+    <div class="score-row"><span class="label">الأسئلة المفتوحة</span><span class="val pending">⏳ تحتاج تصحيح يدوي</span></div>
+    <div class="score-row"><span class="label">وقت التسليم</span><span class="val">${submission.time}</span></div>
+  `;
+  document.getElementById('scoreDisplay').innerHTML = html;
+
+  showScreen('screen-success');
+}
+
+function collectAllAnswers() {
+  const result = {};
+  // MCQ
+  ['q1a','q1b','q1c','q5a','q5b','q8d'].forEach(id => {
+    const container = document.getElementById(id);
+    if (!container) return;
+    const sel = container.querySelector('.mcq-option.selected');
+    if (sel) result[id] = sel.querySelector('.opt-text')?.textContent || '';
+  });
+  // TF
+  for (let i = 0; i < 5; i++) {
+    const T = document.getElementById(`tf_${i}_T`);
+    const F = document.getElementById(`tf_${i}_F`);
+    if (T?.classList.contains('active-true')) result[`tf_${i}`] = 'صح';
+    else if (F?.classList.contains('active-false')) result[`tf_${i}`] = 'خطأ';
+  }
+  // Inputs & textareas
+  const ids = ['q3_r1','q3_r2','q3_r3','q3_r4','q4a','q4b','q6_r1','q6_r2','q6_r3','q6_r4',
+                'q7a','q7b','q8a','q8b','q8c','q9a','q9b','q9c',
+                'q10a','q10b','q10c','q10d','q10e'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) result[id] = el.value;
+  });
+  return result;
+}
+
+/* ============================================================
+   RATING
+   ============================================================ */
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('rating-opt')) {
+    const group = e.target.closest('[data-q]');
+    group.querySelectorAll('.rating-opt').forEach(o => o.classList.remove('selected'));
+    e.target.classList.add('selected');
+  }
+});
+
+function submitRating() {
+  const rating = {};
+  document.querySelectorAll('[data-q]').forEach(g => {
+    const q = g.dataset.q;
+    const sel = g.querySelector('.selected');
+    if (sel) rating[q] = sel.dataset.v;
+  });
+  rating.note = document.getElementById('ratingNote')?.value || '';
+
+  if (submissions[currentCode]) {
+    submissions[currentCode].rating = rating;
+  }
+
+  alert('🌟 شكراً جزيلاً على تقييمك!');
+}
+
+/* ============================================================
+   TEACHER
+   ============================================================ */
+function teacherLogin() {
+  const pass = document.getElementById('teacherPass').value;
+  if (pass === TEACHER_PASSWORD) {
+    showScreen('screen-teacher');
+    renderDashboard();
+  } else {
+    document.getElementById('teacherError').style.display = 'block';
+  }
+}
+
+function teacherLogout() {
+  document.getElementById('teacherPass').value = '';
+  showScreen('screen-welcome');
+}
+
+function renderDashboard() {
+  const subs = Object.values(submissions);
+  const count = subs.length;
+  const avg = count ? Math.round(subs.reduce((a, b) => a + (b.autoScore || 0), 0) / count) : 0;
+
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="stat-card"><div class="stat-val">${count}</div><div class="stat-label">عدد الطلاب</div></div>
+    <div class="stat-card"><div class="stat-val">${avg}</div><div class="stat-label">متوسط العلامة (تلقائي)</div></div>
+    <div class="stat-card"><div class="stat-val">${subs.filter(s => (s.autoScore||0) >= 35).length}</div><div class="stat-label">امتازوا (≥ 35)</div></div>
+    <div class="stat-card"><div class="stat-val">${subs.filter(s => (s.autoScore||0) < 25).length}</div><div class="stat-label">يحتاجون دعماً</div></div>
+  `;
+
+  document.getElementById('studentCount').textContent = `(${count} طالب)`;
+
+  if (count === 0) {
+    document.getElementById('studentsTableBody').innerHTML = '<div class="empty-state">لا يوجد طلاب سلّموا الامتحان بعد.</div>';
+    return;
+  }
+
+  const rows = subs.map((s, i) => {
+    const score = s.autoScore || 0;
+    const grade = score >= 38 ? 'A' : score >= 30 ? 'B' : score >= 22 ? 'C' : 'D';
+    const gradeLabel = score >= 38 ? 'ممتاز' : score >= 30 ? 'جيد جداً' : score >= 22 ? 'جيد' : 'يحتاج دعم';
+    return `<tr>
+      <td>${i + 1}</td>
+      <td style="font-weight:700; color:var(--accent2);">${s.code}</td>
+      <td style="font-size:12px; color:var(--text3);">${s.time}</td>
+      <td>${s.autoScore} <span style="font-size:11px; color:var(--text3);">/ 42 (تلقائي)</span></td>
+      <td><span class="grade-badge grade-${grade}">${gradeLabel}</span></td>
+      <td><button class="btn-detail" onclick="showDetail('${s.code}')">تفاصيل</button></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('studentsTableBody').innerHTML = `
+    <table class="results-table">
+      <thead><tr><th>#</th><th>رمز الطالب</th><th>وقت التسليم</th><th>العلامة التلقائية</th><th>التقدير</th><th>تفاصيل</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+
+  // Bloom
+  document.getElementById('bloomChartWrap').innerHTML = `
+    <h3>📊 مستويات بلوم الكلية</h3>
+    ${buildBloomChart()}
+  `;
+}
+
+function showDetail(code) {
+  const s = submissions[code];
+  if (!s) return;
+  const p = JSON.parse(s.params);
+  const a = s.answers;
+
+  let html = `<div style="font-size:13px; color:var(--text2); margin-bottom:16px;">رمز الطالب: <strong style="color:var(--accent2)">${code}</strong> — تسليم: ${s.time}</div>`;
+  html += `<div class="detail-row"><div class="d-label">معطيات الامتحان (مخصصة)</div><div class="d-val" style="font-size:12px; color:var(--text3); word-break:break-all;">${s.params}</div></div>`;
+
+  // Show all answers
+  Object.entries(a).forEach(([k, v]) => {
+    if (v) {
+      html += `<div class="detail-row"><div class="d-label">${k}</div><div class="d-val">${v}</div></div>`;
+    }
+  });
+
+  if (s.rating && Object.keys(s.rating).length) {
+    html += `<div class="detail-row"><div class="d-label">تقييم الطالب</div><div class="d-val" style="font-size:12px;">${JSON.stringify(s.rating)}</div></div>`;
+  }
+
+  document.getElementById('modalStudentName').textContent = `تفاصيل: ${code}`;
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('detailModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('detailModal').classList.remove('open');
+}
+
+/* ============================================================
+   DOWNLOAD CSV
+   ============================================================ */
+function downloadCSV() {
+  const subs = Object.values(submissions);
+  if (!subs.length) { alert('لا توجد نتائج بعد.'); return; }
+
+  const headers = ['رمز الطالب', 'وقت التسليم', 'العلامة التلقائية'];
+  const rows = subs.map(s => [s.code, s.time, s.autoScore || 0]);
+
+  const csv = [headers, ...rows].map(r => r.join(',')).join('\n');
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'نتائج_امتحان_الفيزياء.csv';
+  a.click();
+}
+
+function downloadFullReport() {
+  const subs = Object.values(submissions);
+  if (!subs.length) { alert('لا توجد نتائج بعد.'); return; }
+
+  let txt = 'تقرير امتحان فيزياء — الصف السابع — موضوع الحركة\n';
+  txt += '====================================================\n\n';
+  subs.forEach(s => {
+    txt += `الطالب: ${s.code} | التسليم: ${s.time} | العلامة التلقائية: ${s.autoScore}\n`;
+    txt += `الإجابات:\n`;
+    Object.entries(s.answers).forEach(([k, v]) => {
+      if (v) txt += `  ${k}: ${v}\n`;
+    });
+    txt += '\n';
+  });
+
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'تقرير_كامل_الامتحان.txt';
+  a.click();
+}
+
+/* ============================================================
+   KEYBOARD ENTER ON LOGIN
+   ============================================================ */
+document.getElementById('codeInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startExam();
+});
+document.getElementById('teacherPass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') teacherLogin();
+});
+
+/* ============================================================
+   GLOBAL PASTE BLOCK IN EXAM
+   ============================================================ */
+document.addEventListener('paste', (e) => {
+  if (document.getElementById('screen-exam').classList.contains('active')) {
+    const active = document.activeElement;
+    // Allow paste only in teacher dashboard or non-exam screens
+    if (active && (active.tagName === 'TEXTAREA' || active.type === 'text')) {
+      blockPaste(e);
+    }
+  }
+});
+</script>
+</body>
+</html>
