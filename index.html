@@ -1374,6 +1374,7 @@ table.results-table {
       <p style="font-size:13px; color:var(--accent2); margin-top:4px;">منى مصطفى — فيزياء الصف السابع</p>
     </div>
     <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn btn-secondary" style="padding:8px 16px; font-size:13px;" onclick="renderDashboard()">🔄 تحديث</button>
       <button class="btn btn-secondary" style="padding:8px 16px; font-size:13px;" onclick="downloadCSV()">⬇ CSV</button>
       <button class="btn btn-secondary" style="padding:8px 16px; font-size:13px;" onclick="downloadFullReport()">⬇ تقرير كامل</button>
       <button class="btn btn-secondary" style="padding:8px 16px; font-size:13px;" onclick="teacherLogout()">← خروج</button>
@@ -1527,9 +1528,36 @@ function generateParams(code) {
 }
 
 /* ============================================================
-   EXAM ANSWERS STORAGE (in-memory)
+   STORAGE HELPERS — persistent shared across all users
    ============================================================ */
-const submissions = {}; // { code: { name, time, params, answers, autoScore, rating } }
+const STORAGE_PREFIX = 'sub:';
+
+async function saveSubmission(code, data) {
+  try {
+    await window.storage.set(STORAGE_PREFIX + code, JSON.stringify(data), true);
+  } catch(e) { console.error('save failed', e); }
+}
+
+async function loadAllSubmissions() {
+  try {
+    const list = await window.storage.list(STORAGE_PREFIX, true);
+    const result = {};
+    for (const key of (list?.keys || [])) {
+      try {
+        const rec = await window.storage.get(key, true);
+        if (rec?.value) result[key.replace(STORAGE_PREFIX, '')] = JSON.parse(rec.value);
+      } catch(e) {}
+    }
+    return result;
+  } catch(e) { return {}; }
+}
+
+async function loadSubmission(code) {
+  try {
+    const rec = await window.storage.get(STORAGE_PREFIX + code, true);
+    return rec?.value ? JSON.parse(rec.value) : null;
+  } catch(e) { return null; }
+}
 
 /* ============================================================
    STATE
@@ -2355,10 +2383,11 @@ function submitExam(auto) {
     if (el && parseFloat(el.value) === parseFloat(correct)) autoScore += 1;
   });
 
-  // Save submission
+  // Save submission — write to persistent shared storage
+  const submitTime = new Date().toLocaleString('ar');
   const submission = {
     code: currentCode,
-    time: new Date().toLocaleString('ar'),
+    time: submitTime,
     params: JSON.stringify(p),
     answers: collectAllAnswers(),
     autoScore,
@@ -2366,18 +2395,27 @@ function submitExam(auto) {
     totalScore: null,
     rating: {}
   };
-  submissions[currentCode] = submission;
 
-  // Build score display
-  const html = `
+  // Show saving indicator immediately
+  document.getElementById('scoreDisplay').innerHTML = `
     <div class="score-row"><span class="label">الطالب</span><span class="val">${currentCode}</span></div>
-    <div class="score-row"><span class="label">العلامة التلقائية (MCQ + TF + الجداول)</span><span class="val auto">~${autoScore} / 42</span></div>
-    <div class="score-row"><span class="label">الأسئلة المفتوحة</span><span class="val pending">⏳ تحتاج تصحيح يدوي</span></div>
-    <div class="score-row"><span class="label">وقت التسليم</span><span class="val">${submission.time}</span></div>
+    <div class="score-row"><span class="label">جاري الحفظ...</span><span class="val pending">⏳</span></div>
   `;
-  document.getElementById('scoreDisplay').innerHTML = html;
-
   showScreen('screen-success');
+
+  // Save to persistent storage (async)
+  saveSubmission(currentCode, submission).then(ok => {
+    const statusHtml = ok
+      ? `<div class="score-row"><span class="label">حالة الحفظ</span><span class="val auto">✅ تم الحفظ بنجاح</span></div>`
+      : `<div class="score-row"><span class="label">حالة الحفظ</span><span class="val" style="color:var(--red)">⚠️ فشل الحفظ — أبلغ المعلمة</span></div>`;
+    document.getElementById('scoreDisplay').innerHTML = `
+      <div class="score-row"><span class="label">الطالب</span><span class="val">${currentCode}</span></div>
+      <div class="score-row"><span class="label">العلامة التلقائية (MCQ + TF + الجداول)</span><span class="val auto">~${autoScore} / 42</span></div>
+      <div class="score-row"><span class="label">الأسئلة المفتوحة</span><span class="val pending">⏳ تحتاج تصحيح يدوي</span></div>
+      <div class="score-row"><span class="label">وقت التسليم</span><span class="val">${submitTime}</span></div>
+      ${statusHtml}
+    `;
+  });
 }
 
 function collectAllAnswers() {
@@ -2418,7 +2456,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
-function submitRating() {
+async function submitRating() {
   const rating = {};
   document.querySelectorAll('[data-q]').forEach(g => {
     const q = g.dataset.q;
@@ -2427,8 +2465,11 @@ function submitRating() {
   });
   rating.note = document.getElementById('ratingNote')?.value || '';
 
-  if (submissions[currentCode]) {
-    submissions[currentCode].rating = rating;
+  // Load current submission and append rating
+  const existing = await loadSubmission(currentCode);
+  if (existing) {
+    existing.rating = rating;
+    await saveSubmission(currentCode, existing);
   }
 
   alert('🌟 شكراً جزيلاً على تقييمك!');
@@ -2437,11 +2478,11 @@ function submitRating() {
 /* ============================================================
    TEACHER
    ============================================================ */
-function teacherLogin() {
+async function teacherLogin() {
   const pass = document.getElementById('teacherPass').value;
   if (pass === TEACHER_PASSWORD) {
     showScreen('screen-teacher');
-    renderDashboard();
+    await renderDashboard();
   } else {
     document.getElementById('teacherError').style.display = 'block';
   }
@@ -2452,8 +2493,19 @@ function teacherLogout() {
   showScreen('screen-welcome');
 }
 
-function renderDashboard() {
-  const subs = Object.values(submissions);
+// Cached submissions for teacher session (populated from storage)
+let cachedSubmissions = {};
+
+async function renderDashboard() {
+  // Show loading state
+  document.getElementById('statsGrid').innerHTML = `
+    <div class="stat-card"><div class="stat-val" style="font-size:18px;">⏳</div><div class="stat-label">جاري التحميل...</div></div>
+  `;
+  document.getElementById('studentsTableBody').innerHTML = '<div class="empty-state">جاري تحميل البيانات...</div>';
+
+  // Load from persistent storage
+  cachedSubmissions = await loadAllSubmissions();
+  const subs = Object.values(cachedSubmissions);
   const count = subs.length;
   const avg = count ? Math.round(subs.reduce((a, b) => a + (b.autoScore || 0), 0) / count) : 0;
 
@@ -2468,6 +2520,7 @@ function renderDashboard() {
 
   if (count === 0) {
     document.getElementById('studentsTableBody').innerHTML = '<div class="empty-state">لا يوجد طلاب سلّموا الامتحان بعد.</div>';
+    document.getElementById('bloomChartWrap').innerHTML = '';
     return;
   }
 
@@ -2492,7 +2545,6 @@ function renderDashboard() {
     </table>
   `;
 
-  // Bloom
   document.getElementById('bloomChartWrap').innerHTML = `
     <h3>📊 مستويات بلوم الكلية</h3>
     ${buildBloomChart()}
@@ -2500,7 +2552,7 @@ function renderDashboard() {
 }
 
 function showDetail(code) {
-  const s = submissions[code];
+  const s = cachedSubmissions[code];
   if (!s) return;
   const p = JSON.parse(s.params);
   const a = s.answers;
@@ -2531,8 +2583,9 @@ function closeModal() {
 /* ============================================================
    DOWNLOAD CSV
    ============================================================ */
-function downloadCSV() {
-  const subs = Object.values(submissions);
+async function downloadCSV() {
+  const allSubs = await loadAllSubmissions();
+  const subs = Object.values(allSubs);
   if (!subs.length) { alert('لا توجد نتائج بعد.'); return; }
 
   const headers = ['رمز الطالب', 'وقت التسليم', 'العلامة التلقائية'];
@@ -2547,8 +2600,9 @@ function downloadCSV() {
   a.click();
 }
 
-function downloadFullReport() {
-  const subs = Object.values(submissions);
+async function downloadFullReport() {
+  const allSubs = await loadAllSubmissions();
+  const subs = Object.values(allSubs);
   if (!subs.length) { alert('لا توجد نتائج بعد.'); return; }
 
   let txt = 'تقرير امتحان فيزياء — الصف السابع — موضوع الحركة\n';
@@ -2556,9 +2610,12 @@ function downloadFullReport() {
   subs.forEach(s => {
     txt += `الطالب: ${s.code} | التسليم: ${s.time} | العلامة التلقائية: ${s.autoScore}\n`;
     txt += `الإجابات:\n`;
-    Object.entries(s.answers).forEach(([k, v]) => {
+    Object.entries(s.answers || {}).forEach(([k, v]) => {
       if (v) txt += `  ${k}: ${v}\n`;
     });
+    if (s.rating && Object.keys(s.rating).length) {
+      txt += `التقييم: ${JSON.stringify(s.rating)}\n`;
+    }
     txt += '\n';
   });
 
